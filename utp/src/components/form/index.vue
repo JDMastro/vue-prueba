@@ -1,9 +1,9 @@
 <template>
   <section class="bienvenido">
-    <form class="formulario">
+    <form class="formulario" @submit.prevent="login()">
       <div class="form">
-        <input type="email" class="form-control input-config" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar usuario">
-        <input type="password" class="form-control input-config" id="exampleInputPassword1" placeholder="Ingresar contraseña">
+        <input v-model="email" type="email" class="form-control input-config" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar usuario">
+        <input v-model="password" type="password" class="form-control input-config" id="exampleInputPassword1" placeholder="Ingresar contraseña">
       </div>
       <button type="submit" class="boton">Ingresar</button>
       <button type="submit" class="boton">Crear usuario</button>
@@ -12,8 +12,21 @@
 </template>
 
 <script>
+
+import Service from "../services/loginService";
+
 export default {
   name: 'Form',
+  data: () => ({
+    email: "",
+    password: ""
+  }),
+  methods: {
+    async login() {
+        const res = await Service.login(this.email, this.password)
+      console.log(res.data);
+    }
+  }
 }
 </script>
 
